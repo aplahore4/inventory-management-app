@@ -7,6 +7,7 @@ const errorHandler = require('./middleware/errorMiddleware');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoute');
 const productRoute = require('./routes/productRoute');
+const contactRoute = require('./routes/contactRoute');
 const path = require('path');
 
 const { PORT, MONGO_URL } = require('./config');
@@ -38,6 +39,7 @@ app.use('uploads', express.static(path.join(__dirname, 'uploads')));
 //Routes Middle wares
 app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);
+app.use('/api/contactUs', contactRoute);
 
 // Routes
 app.get('/', (req, res) => {

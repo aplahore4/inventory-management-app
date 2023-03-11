@@ -83,4 +83,56 @@ const deleteProduct = asyncHandler(async (req, res) => {
   res.send('Product deleted.');
 });
 
-module.exports = { createProduct, getProducts, getProduct, deleteProduct };
+const updateProduct = asyncHandler(async (req, res) => {
+  const productId = req.params.id;
+  const userId = req.userId;
+
+  const { name, category, quantity, price, description } = req.body;
+
+  let update = { name, category, quantity, price, description };
+
+  let fileData = {};
+  if (req.file) {
+    let uploadedFile;
+    try {
+      uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'Inventory Management App',
+        resource_type: 'image',
+      });
+    } catch (error) {
+      res.status(500);
+      throw new Error('Image could not be uploaded.');
+    }
+    fileData = {
+      fileName: req.file.originalname,
+      filePath: uploadedFile.secure_url,
+      fleType: req.file.mimetype,
+      fileSize: fileSizeFormatter(req.file.size, 2),
+    };
+
+    update = { name, category, quantity, price, description, image: fileData };
+  }
+
+  const product = await Product.findOneAndUpdate(
+    { _id: productId, user: userId },
+    update,
+    { new: true }
+  );
+
+  if (!product) {
+    res.status(400);
+    throw new Error('No product found.');
+  }
+
+  return res.status(200).json(product);
+
+  res.send('Update product.');
+});
+
+module.exports = {
+  createProduct,
+  getProducts,
+  getProduct,
+  deleteProduct,
+  updateProduct,
+};
