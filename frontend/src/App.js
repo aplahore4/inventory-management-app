@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Sidebar from './components/sidebar/Sidebar';
+import Layout from './components/layout/Layout';
+import Dashboard from './pages/dashboard/Dashboard';
 import Forgot from './pages/auth/Forgot';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -9,19 +12,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/register' element={<Register />}>
-          Register
-        </Route>
-        <Route path='/login' element={<Login />}>
-          Login
-        </Route>
-        <Route path='/resetpassword/:resetToken' element={<Reset />}>
-          Reset
-        </Route>
-        <Route path='/forgot' element={<Forgot />}>
-          Forgot
-        </Route>
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/resetpassword/:resetToken' element={<Reset />} />
+        <Route path='/forgot' element={<Forgot />} />
+        <Route
+          path='/dashboard'
+          element={
+            <Sidebar>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
