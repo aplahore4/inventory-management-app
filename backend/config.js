@@ -8,6 +8,8 @@ const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_SERVER_PORT = 587;
 const CLOUDINARY_URL = process.env.CLOUDINARY_URL;
+const FRONTEND_URL_DEV = 'http://localhost:3000';
+const FRONTEND_URL_PRODUCTION = 'http://localhost:3000';
 
 module.exports = {
   MONGO_URL,
@@ -20,4 +22,6 @@ module.exports = {
   PORT,
   EMAIL_SERVER_PORT,
   CLOUDINARY_URL,
+  FRONTEND_URL_DEV,
+  FRONTEND_URL_PRODUCTION,
 };

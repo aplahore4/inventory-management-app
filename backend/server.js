@@ -10,7 +10,12 @@ const productRoute = require('./routes/productRoute');
 const contactRoute = require('./routes/contactRoute');
 const path = require('path');
 
-const { PORT, MONGO_URL } = require('./config');
+const {
+  PORT,
+  MONGO_URL,
+  FRONTEND_URL_DEV,
+  FRONTEND_URL_PRODUCTION,
+} = require('./config');
 const { upload } = require('./utils/uploadFile');
 
 const app = express();
@@ -32,7 +37,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: [FRONTEND_URL_DEV, FRONTEND_URL_PRODUCTION],
+    credentials: true,
+  })
+);
 
 app.use('uploads', express.static(path.join(__dirname, 'uploads')));
 
