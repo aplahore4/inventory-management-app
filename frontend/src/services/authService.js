@@ -12,7 +12,26 @@ export const registerUser = async (userData) => {
       }
     );
     if (response.statusText === 'OK') {
-      toast.success('User Registered successfully.');
+      toast.success('User registered successfully.');
+    }
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+export const loginUser = async (userData) => {
+  try {
+    const response = await axios.post(
+      `${REACT_APP_BACKEND_URL}/api/users/login`,
+      userData
+    );
+    if (response.statusText === 'OK') {
+      toast.success('User logged in successfully.');
     }
     return response.data;
   } catch (error) {
